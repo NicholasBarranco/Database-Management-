@@ -235,7 +235,7 @@ Select i.itemName, i.invid, i.NumOfUses, i.Tier,
     On i.invid = i.invid;
     
 SELECT * FROM InventoryAndItems
-WHERE NumOfUses = 3;
+WHERE NumOfUses = 3
 ORDER BY username ASC;
 
 ------------------------------
@@ -340,7 +340,6 @@ CREATE OR REPLACE FUNCTION tradeItems()
 
 SELECT tradeItems();
 
-
 --------------
 -- TRIGGERS --
 --------------
@@ -348,14 +347,18 @@ DROP TRIGGER IF EXISTS endGame ON Items;
 CREATE TRIGGER endGame
 after DELETE on Inventory
 FOR EACH ROW EXECUTE PROCEDURE tradeItems();
+
+
 --------------
 -- SECURITY --
 --------------
 Create ROLE Player;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA PUBLIC TO Player;
+GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO Player;
 
 CREATE ROLE admin WITH LOGIN PASSWORD 'alpaca';
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA PUBLIC TO admin;
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA PUBLIC TO admin;
 
+--I had to.
 CREATE ROLE superadmin WITH LOGIN PASSWORD 'thecakeisalie';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA PUBLIC TO superadmin;
+
